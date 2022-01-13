@@ -3,8 +3,11 @@
 scores = open("scores.txt", "r")
 ratings = {}
 
-user_restaurant = input("Please enter a restaurant name: ")
+user_input = input("Please enter a restaurant name: ")
+user_restaurant = user_input.capitalize()
+
 user_score = input("Please enter a rating between 0 and 5 for " + user_restaurant + ": ")
+
 
 def get_ratings():
     ratings[user_restaurant] = user_score
