@@ -1,5 +1,6 @@
 """Restaurant rating lister."""
 
+from random import choice
 
 print("\nHello, welcome to your favorite restaurant rater!")
 
@@ -8,7 +9,7 @@ scores = open("scores.txt", "r")
 user_restaurant = ""
 user_score = 0
 ratings = {}
-
+item = ratings.items()
 
 def get_ratings():
     if user_restaurant != "":
@@ -18,7 +19,7 @@ def get_ratings():
         ratings[pair[0]] = pair[-1].strip()
 
 def print_ratings_alphabetical():
-    item = ratings.items()
+    global item
     alpha = sorted(item)
     for pairs in alpha:
         print(str(pairs[0]), "got a rating of", str(pairs[1]) + ".")
@@ -33,9 +34,23 @@ def judge_score():
         print("\nThat is not a number from 0 to 5, please try again.")
         judge_score()
 
+def update_random():
+    global item
+    get_ratings()
+    in_list = list(item)
+    random_choice = choice(in_list)
+    print("\n" + str(random_choice[0]), "got a rating of", str(random_choice[1]) + ".")
+    new_rating = input("\nGive " + str(random_choice[0]) + " a new rating: ")
+    ratings[random_choice[0]] = new_rating
+    get_ratings()
+    print_ratings_alphabetical()
+
+def update_chosen():
+  return
+
 def main():
-    print("\nWould you like to see all the ratings in alphabetical order?\nPress A\nWould you like to add a new restaurant?\nPress N\nWould you like to Quit?\nPress Q")
-    user_operation = input("Enter here: ")
+    print("\nWould you like to see all the ratings in alphabetical order?\nPress A\nWould you like to add a new restaurant?\nPress N\nWould you like to update a score on a random restaurant?\nPress UR\nWould you like to Quit?\nPress Q")
+    user_operation = input("Enter here: \n")
 
     if user_operation.lower() == "a":
         get_ratings()
@@ -45,6 +60,9 @@ def main():
         judge_score()
         get_ratings()
         print_ratings_alphabetical()
+        main()
+    elif user_operation.lower() == "ur":
+        update_random()
         main()
     elif user_operation.lower() == "q":
         scores.close()
